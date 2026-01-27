@@ -1,0 +1,128 @@
+/* Import school font (Cairo for Arabic + Inter fallback) */
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&family=Inter:wght@300;400;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root{
+	--brand-primary: #071e3d; /* deep navy */
+	--brand-gold: #f6c85f; /* warm gold */
+	--brand-accent: #00ffaa; /* brighter emerald accent for contrast */
+	--brand-purple: #7c3aed; /* school purple */
+	--brand-glass: rgba(255,255,255,0.06);
+	--brand-glass-2: rgba(255,255,255,0.03);
+	--text-on-dark: #0062ff;
+	--muted-on-dark: rgba(0, 98, 255, 0.88);
+	--text-dark: #1875ee; /* dark text for cards/inputs */
+	--muted-dark: rgba(7,30,61,0.75);
+	--font-sans: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+	--font-ar: 'Cairo', 'Noto Sans Arabic', sans-serif;
+}
+
+/* small helper */
+body { font-family: var(--font-ar), var(--font-sans); background: linear-gradient(180deg, #071428 0%, #0b1d2f 100%); }
+
+/* Auth panel visuals */
+.glass-card {
+	background: var(--brand-glass);
+	backdrop-filter: blur(8px) saturate(120%);
+	border-radius: 14px;
+	border: 1px solid var(--brand-glass-2);
+	box-shadow: 0 6px 30px rgba(221, 217, 217, 0.5), inset 0 1px 0 rgba(247, 241, 241, 0.02);
+	/* default body text inside cards should be dark for legibility */
+	color: var(--text-dark);
+}
+
+.input-rounded {
+	width: 100%;
+	padding: 0.75rem 1rem;
+	border-radius: 10px;
+	/* make inputs lighter for clear text contrast */
+	background: rgba(255, 255, 255, 0.92);
+	border: 1px solid rgb(255, 255, 255);
+	color: var(--text-dark);
+}
+.input-rounded::placeholder { color: rgba(11,29,47,0.45); }
+
+.neon-border-green { box-shadow: 0 0 34px rgba(16,185,129,0.14), 0 0 0 1px rgba(16,185,129,0.06) inset; }
+.neon-border-purple { box-shadow: 0 0 34px rgba(124,58,237,0.14), 0 0 0 1px rgba(124,58,237,0.06) inset; }
+
+/* Accent text helpers */
+.accent-green { color: var(--brand-accent); font-weight: 700; }
+.accent-purple { color: var(--brand-purple); font-weight: 700; }
+.muted { color: var(--muted-on-dark); }
+
+/* inside glass cards, prefer dark muted copy for paragraphs/
+	 helper text while leaving headers colored via .accent-* classes */
+.glass-card p, .glass-card .muted, .glass-card .text-sm, .glass-card .text-xs {
+	/* ensure helper / paragraph / small text is dark and readable */
+	color: var(--text-dark) !important;
+}
+
+/* placeholders inside inputs in cards should be readable but slightly muted */
+.glass-card input::placeholder, .glass-card textarea::placeholder {
+	color: rgba(7,30,61,0.45) !important;
+}
+
+/* keep headers and specially marked accent classes colored */
+.glass-card h1, .glass-card h2, .glass-card h3, .glass-card .accent-green, .glass-card .accent-purple {
+	color: unset; /* allow accent classes or default heading color to apply */
+}
+
+/* ensure very small helper copy inside glass cards stays readable */
+.glass-card .text-xs { color: var(--muted-on-dark); font-size: 0.85rem; }
+
+/* Buttons using brand palette */
+.btn-primary {
+	width: 100%;
+	padding: 0.75rem 1rem;
+	border-radius: 0.5rem;
+	background: linear-gradient(90deg, var(--brand-gold), #f2cb6a);
+	color: #071e3d; /* dark text on gold */
+	font-weight: 700;
+	border: none;
+	box-shadow: 0 6px 18px rgba(255, 255, 255, 0.12);
+}
+.btn-primary:disabled { opacity: 0.7; }
+
+.btn-secondary {
+	width: 100%;
+	padding: 0.75rem 1rem;
+	border-radius: 0.5rem;
+	background: linear-gradient(90deg, var(--brand-purple), #5b21b6);
+	color: rgb(0, 0, 0);
+	font-weight: 700;
+	border: none;
+	box-shadow: 0 6px 18px rgba(124,58,237,0.12);
+}
+.btn-secondary:disabled { opacity: 0.7; }
+
+/* flowing neon background - subtle animated lines */
+.neon-flow {
+	background: radial-gradient(ellipse at center, rgba(144, 129, 129, 0.02), rgba(0,0,0,0.25));
+}
+.neon-flow::before {
+	content: '';
+	position: absolute; inset: 0;
+	background-image: linear-gradient(90deg, rgba(124,58,237,0.06) 0%, rgba(16,185,129,0.06) 25%, rgba(124,58,237,0.06) 50%, rgba(246,192,79,0.06) 75%, rgba(124,58,237,0.06) 100%);
+	mix-blend-mode: screen;
+	filter: blur(24px);
+	opacity: 0.55; /* reduce overlay intensity for clearer foreground text */
+	transform: translateX(-10%);
+	animation: flowX 10s linear infinite;
+}
+.neon-flow::after {
+	content: '';
+	position: absolute; inset: 0;
+	background-image: repeating-linear-gradient(135deg, rgba(255,255,255,0.01) 0 2px, transparent 2px 8px);
+	mix-blend-mode: overlay;
+	filter: blur(12px) opacity(0.6);
+}
+
+@keyframes flowX { from { transform: translateX(-20%); } to { transform: translateX(20%); } }
+
+/* make text lighter on dark bg */
+body, .glass-card, .input-rounded, .neon-flow { color: var(--text-on-dark); }
+
+
