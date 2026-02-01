@@ -72,7 +72,7 @@ export default function HealthCheck({ user, token }) {
             <li key={idx}>{it}</li>
           ))}
         </ul>
-        <div className="mt-2 text-xs">Check browser console for details.</div>
+        <div className="mt-2 text-xs">Check browser console for detail.</div>
       </div>
     </div>
   );
